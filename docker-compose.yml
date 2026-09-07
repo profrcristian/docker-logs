@@ -1,0 +1,28 @@
+version: "3.9"
+ 
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - red_logs
+ 
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: clave123
+      MYSQL_DATABASE: proyecto
+    volumes:
+      - datos_logs:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - red_logs
+ 
+networks:
+  red_logs:
+ 
+volumes:
+  datos_logs:
